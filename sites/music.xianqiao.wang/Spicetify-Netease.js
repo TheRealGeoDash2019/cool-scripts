@@ -263,3 +263,5 @@ Netease.prototype.getUnsynced = function(list) {
 
   return lyrics;
 }
+
+globalThis.Netease = Netease;
