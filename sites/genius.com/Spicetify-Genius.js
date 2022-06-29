@@ -187,7 +187,7 @@ Genius.prototype.fetchLyricsVersion = async function(results, index) {
     const htmlDoc = parser.parseFromString(body, "text/html");
     const lyricsDiv = htmlDoc.querySelectorAll('div[data-lyrics-container="true"]');
 
-    lyricsDiv.forEach((i) => (lyrics += i.innerHTML + "\n"));
+    lyricsDiv.forEach((i) => (lyrics += i.innerHTML + "<br>"));
 
     if (!lyrics?.length) {
         console.warn("forceError");
