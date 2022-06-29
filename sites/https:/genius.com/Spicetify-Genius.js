@@ -84,7 +84,9 @@ globalThis.sendCosmosRequest = function(config) {
         return res.text();
     }).then(text => {
         if (config.onSuccess) {
-            config.onSuccess(text);
+            config.onSuccess(JSON.stringify({
+		body: text
+	    }));
         }
     }).catch(err => {
         if (config.onFailure) {
