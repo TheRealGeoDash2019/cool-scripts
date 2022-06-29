@@ -231,14 +231,24 @@ Genius.prototype.fetchLyrics = async function(info, jsOnly = false) {
     if (jsOnly) {
 		let tempLyrics = (new DOMParser()).parseFromString(lyrics, "text/html").body;
 		try {
+			// Burst the Empty Div Bubbles
 			for (const element of Array.from(tempLyrics.querySelectorAll('div'))) {
 				element.remove();
 			};
 		} catch {
 			// Ignore. Intentional
 		}
+		try {
+			// Remove the Annotations.
+			Array.from(tempLyrics.querySelectorAll("br")).forEach(e => {
+			    e.appendChild(document.createTextNode("\n"))
+			})
+		} catch {
+			// Also Ignore. Intentional
+		}
 		
-		return { lyrics: tempLyrics.innerHTML.replaceAll("<br>", "\n"), versions: hits };
+		// Please Work
+		return { lyrics: tempLyrics.innerText, versions: hits };
     }
     return { lyrics, versions: hits };
 }
