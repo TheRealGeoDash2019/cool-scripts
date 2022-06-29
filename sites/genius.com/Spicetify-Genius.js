@@ -229,7 +229,16 @@ Genius.prototype.fetchLyrics = async function(info, jsOnly = false) {
         return { lyrics: null, versions: [] };
     }
     if (jsOnly) {
-	return { lyrics: lyrics.replaceAll("<br>", "\n"), versions: hits };
+		let tempLyrics = (new DOMParser()).parseFromString(lyrics, "text/html").body;
+		try {
+			for (const element of Array.from(tempLyrics.querySelectorAll('div'))) {
+				element.remove();
+			};
+		} catch {
+			// Ignore. Intentional
+		}
+		
+		return { lyrics: tempLyrics.innerHTML.replaceAll("<br>", "\n"), versions: hits };
     }
     return { lyrics, versions: hits };
 }
