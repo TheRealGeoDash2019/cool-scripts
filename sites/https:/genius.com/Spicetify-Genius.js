@@ -197,7 +197,7 @@ Genius.prototype.fetchLyricsVersion = async function(results, index) {
     return lyrics;
 }
 
-Genius.prototype.fetchLyrics = async function(info) {
+Genius.prototype.fetchLyrics = async function(info, jsOnly = false) {
     const titles = new Set([info.title]);
 
     const titleNoExtra = Utils.removeExtraInfo(info.title);
@@ -228,7 +228,9 @@ Genius.prototype.fetchLyrics = async function(info) {
     if (!lyrics) {
         return { lyrics: null, versions: [] };
     }
-
+    if (jsOnly) {
+	return { lyrics.replaceAll("<br>", "\n"), versions: hits };
+    }
     return { lyrics, versions: hits };
 }
 
